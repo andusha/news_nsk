@@ -12,3 +12,9 @@
 В 2 пишешь > npm run watch
 
 вот и все, теперь ты можешь зайти на сайт по ссылке из 1 терминала
+
+а нихуя, не все. Чтоб фласк запустился без ошибок придется еще пошаманить.
+
+в файле по этому пути > .venv/lib/python3.10/site-packages/flask_uploads.py
+строчку from werkzeug import secure_filename, FileStorage меняем на from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
