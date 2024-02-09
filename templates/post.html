@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto max-w-screen-md p-2 md:p-4 font-text text-xs" data-time="{{time}}"></div>
+<div class="flex flex-col gap-1 max-w-screen-md mx-auto">
+    <hr class="bg-gray-500 w-full h-0.5">
+    <div class="px-2 md:px-4 text-base">{{author}}</div>
+    <hr class="bg-gray-500 w-full h-0.5">
+</div>
+<article class="format mx-auto max-w-screen-md p-2 md:p-4 font-title text-black">
+    <h2>{{title}}</h2>
+    {{ post | safe }}
+</article>
+
+{% endblock %}
+{% block scripts %}
+{{ javascript_pack('post', attrs='charset="UTF-8"') }}  
+{% endblock %}

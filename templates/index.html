@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+{% block content %}
+
+<div class="flex flex-col md:flex-row justify-between mx-auto max-w-screen-xl md:p-4 md:gap-10">
+    <div id="carousel-example" class="relative w-full md:w-3/4">
+        <!-- Carousel wrapper -->
+        <div
+            class="relative h-56 overflow-hidden sm:h-64 xl:h-80 2xl:h-96"
+        >
+        {% for post in carousel %}
+            <div id="carousel-item-{{loop.index}}" class="hidden duration-700 ease-in-out">
+                <img
+                    src="{{post.img_path}}"
+                    class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
+                    alt="..."
+                />
+                <span class="absolute w-11/12 top-3/4 left-1/2 lg:text-2xl font-semibold font-title text-white -translate-x-1/2 -translate-y-1/2 text-xs sm:text-base">{{post.title}}</span>
+            </div>
+        {% endfor %}
+        <!-- Slider indicators -->
+        <div
+            class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse"
+        >
+            <button
+                id="carousel-indicator-1"
+                type="button"
+                class="h-3 w-3 rounded-full"
+                aria-current="true"
+                aria-label="Slide 1"
+            ></button>
+            <button
+                id="carousel-indicator-2"
+                type="button"
+                class="h-3 w-3 rounded-full"
+                aria-current="false"
+                aria-label="Slide 2"
+            ></button>
+            <button
+                id="carousel-indicator-3"
+                type="button"
+                class="h-3 w-3 rounded-full"
+                aria-current="false"
+                aria-label="Slide 3"
+            ></button>
+            <button
+                id="carousel-indicator-4"
+                type="button"
+                class="h-3 w-3 rounded-full"
+                aria-current="false"
+                aria-label="Slide 4"
+            ></button>
+        </div>
+    </div>        
+    </div>
+    <div class="flex flex-col w-full md:w-1/3 items-center gap-1">
+        <span class="text-base font-semibold font-text-title">ГЛАВНОЕ СЕГОДНЯ</span>
+        <hr class="bg-main w-full h-0.5">
+        {% for post in top %}
+            <a href="{{url_for('show_post', id=post.id)}}" class="px-6">
+                <span class="text-sm">{{post.title}}</span>
+            </a>
+            <hr class="bg-gray-500 w-full h-0.5">
+        {% endfor %}
+    </div>
+</div>
+<div class="flex items-center py-4">
+    <hr class="bg-main w-full h-0.5">
+    <span class="px-6 whitespace-nowrap font-text-title font-semibold">ВСЕ НОВОСТИ</span>
+    <hr class="bg-main w-full h-0.5">
+</div>
+<div class="flex flex-col md:flex-row justify-between mx-auto max-w-screen-xl md:p-4 gap-3 md:gap-10">
+    {% for col in all_posts %}
+    <div class="flex flex-col w-full md:w-1/3 gap-3">
+        {% for post in all_posts[col] %}
+        {% if post.img_path %}
+        <a href="{{url_for('show_post', id=post.id)}}" class="flex flex-col gap-3 bg-gray-100 rounded" data-type="image">
+            <img src="{{post.img_path}}" alt="" class="w-full rounded">
+            <span class="text-sm px-6">{{post.title}}</span>
+            <span id="date" data-time="{{post.time}}" class="text-sm px-6 py-2"></span>
+        </a>
+        {% else %}
+        <a href="{{url_for('show_post', id=post.id)}}" class="px-6 flex flex-col gap-3">
+            <span class="text-sm">{{post.title}}</span>
+            <span id="date" data-time="{{post.time}}" class="text-sm"></span>
+        </a>
+        {% if all_posts[col] == all_posts['third_col'] %}
+        <hr class="bg-gray-500 w-full h-0.5 last:bg-main md:last:hidden" data-type="line">         
+        {% else %}
+        <hr class="bg-gray-500 w-full h-0.5 md:last:hidden" data-type="line"> 
+        {% endif %}
+        {% endif %}   
+        {% endfor %}
+    </div>
+    {% endfor %} 
+</div>
+<hr class="bg-main w-full h-0.5 hidden md:block my-4">
+
+{% endblock %}
+
+{% block scripts %}
+{{ javascript_pack('index', attrs='charset="UTF-8"') }}  
+{% endblock %}
